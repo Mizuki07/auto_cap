@@ -6,6 +6,7 @@ import math
 import time
 from selenium import webdriver
 from PIL import Image
+import glob
 
 ## -------------------------------------
 ## ExcelのURLからスクショを保存
@@ -56,10 +57,12 @@ for row in range(sheet.nrows):
 ## ブラウザを閉じる
 driver.quit()
 
-
 ## 幅500pxにリサイズ
-## IMGLIST = []
-img = Image.open(os.path.dirname(os.path.abspath(__file__)) + '/png/test1.png')
 
-img_resize = img.resize((500,302),Image.BICUBIC)
-img_resize.save('png/test1.png')
+## フォルダ内のファイル取得
+
+IMGLIST = glob.glob(os.path.dirname(os.path.abspath(__file__)) +'/png/*')
+for row in range(len(IMGLIST)):
+    img = Image.open(IMGLIST[row])
+    img_resize = img.resize((500,302),Image.BICUBIC)
+    img_resize.save(IMGLIST[row])
